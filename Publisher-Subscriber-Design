@@ -1,0 +1,127 @@
+interface Topic
+{
+	public void addPublisher(Publisher publish);
+
+	public void addSubscriber(Subscriber subscriber);
+
+	public void notifySubscribers(Message message);
+
+	public void applyPoll(Subscriber subscriber);
+
+}
+
+interface Publisher
+{
+	public void sendMessage(Message message);
+}
+
+interface Subscriber
+{
+	public void consumeMessage(Message message);
+
+	public void pollMessages(Topic topic);
+
+}
+
+class TopicImpl implements Topic
+{
+	private String topicName;
+
+	public TopicImpl(String topicName){
+	      this.topicName = topicName;
+	}
+
+	// key publisher name, value -publisher itself
+	private Map<String,Publisher> publishers = new ArrayList<>();
+	// key consumer name, value - consumer itself
+	private Map<String,Subscriber> subscribers = new ArrayList<>();
+
+
+    // key consumer Name , value offset
+    private Map<String,Integer> offsetConsumer = new HashMap<>();
+
+
+    public void addPublisher(Publisher publisher)
+    {
+    	// check if same name exists if so throw ProducerAlreadyExistsException
+
+    	//otherwise add to the map
+    }
+
+    public void addConsumer(Consumer consumer)
+    {
+    	// check if same name exists if so throw ConsumerAlreadyExistsException
+
+    	//otherwise add to the map
+    }
+
+    
+    public void notifySubscribers(Message message){
+
+    	 // callSaveMessageToDirectory() -- follow some naming format
+    	 // getTheFileCountIntheDirectory() -- which is the offset
+    	 // iterate all the subscribers to this topic
+    	 // check each consumer offset with the file offset 
+    	 // call consume messages for the place from the offset
+
+    	 
+
+    }
+
+    public void applyPoll(Subscriber subscriber){
+    	// getTheFileCountIntheDirectory() -- which is the offset
+    	 // check this consumer offset with the file offset 
+    	 // call consume messages for the place from the offset
+
+    }
+
+}
+
+class ConsumerImpl implements Consumer
+{
+	private Topic topic;
+
+	private  String consumerName;
+
+    public void consumeMessage(Message message){
+    	// just recieve and print the message
+    }
+
+	public void pollMessages(){
+		// just call periodically 
+		// applypoll method of the topic
+	}
+
+
+}
+
+class PublisherImpl implements Publisher
+{
+	private Topic topic;
+
+	private String consumerName;
+
+	public void sendMessage(Message message)
+	{
+	   // call topic.notifySubscribers(message);
+	}
+}
+
+
+
+
+class ConsumerAlreadyExistsException extends Exception
+{
+	public ConsumerAlreadyExistsException(String message){
+		super(message);
+
+	}
+}
+
+class ProducerAlreadyExistsException extends Exception
+{
+	public ProducerAlreadyExistsException(String message){
+		super(message);
+
+	}
+}
